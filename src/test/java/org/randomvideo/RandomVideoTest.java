@@ -4,16 +4,19 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.*;
 
 public class RandomVideoTest {
 
@@ -23,6 +26,18 @@ public class RandomVideoTest {
   @Before
   public void setUp() {
     MockitoAnnotations.openMocks(this);
+  }
+
+  @Test
+  public void naoDeveSortearVideoComListaDeFilesVazia() {
+    final File defaultPath = new File(Sistema.DEFAULT_PATH);
+    final List<File> listFiles = new ArrayList<>();
+
+    doReturn(listFiles).when(randomVideo).listVideoFiles(defaultPath);
+    randomVideo.sortearVideo();
+
+    verify(randomVideo).sortearVideo();
+    verify(randomVideo, times(0)).executarVideo(Mockito.any());
   }
 
   @Test

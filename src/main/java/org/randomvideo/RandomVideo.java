@@ -14,24 +14,19 @@ public class RandomVideo {
   /**
    * Filtra arquivos de um diretório(incluíndo os sub-diretórios) que tenham as extensões: mp4, mkv, webm e flv.
    * @param fileDirectory diretório de onde os arquivos serão filtrados.
-   * @return Collection de File com os arquivos filtrados.
+   * @return List de File com os arquivos filtrados.
    */
-  protected Collection<File> listVideoFiles(File fileDirectory) {
+  protected List<File> listVideoFiles(File fileDirectory) {
     Collection<File> files = FileUtils.listFiles(
             fileDirectory,
             new RegexFileFilter("^.*(mp4|mkv|webm|flv)"),
             DirectoryFileFilter.DIRECTORY);
 
-    return files;
+    return files.stream().collect(Collectors.toList());
   }
 
-  // TODO: 03/12/2022 inserir doc
-  public void sortearVideo() {
-    final String pathName = "/home/cristofer/Downloads/";
-    File directory = new File(pathName);
-
-    Collection<File> files = listVideoFiles(directory);
-
+  // TODO: 04/12/2022 inserir doc
+  protected List<RVideo> gerarListaRVideo(List<File> files) {
     final AtomicInteger aiIndex = new AtomicInteger(0);
 
     final List<RVideo> rVideos = files.stream().map(file -> {
@@ -40,12 +35,22 @@ public class RandomVideo {
 
     }).collect(Collectors.toList());
 
+    return rVideos;
+  }
+
+  // TODO: 04/12/2022 inserir doc
+  protected RVideo sortearRVideo(List<RVideo> rVideos) {
     final Random random = new Random();
     final int randomInt = random.ints(0, (rVideos.size() - 1)).findFirst().getAsInt();
     final RVideo rVideo = rVideos.stream().filter(rvideo -> rvideo.getIndex() == randomInt).findFirst().get();
 
+    return rVideo;
+  }
+
+  // TODO: 04/12/2022 inserir doc
+  protected void executarVideo(String videoPath) {
     final ProcessBuilder processBuilder = new ProcessBuilder();
-    final String command = rVideo.getAbsolutePath();
+    final String command = videoPath;
     processBuilder.command("xdg-open", command);
 
     try {
@@ -73,6 +78,20 @@ public class RandomVideo {
       throw new RuntimeException(e);
     } finally {
       System.exit(0);
+    }
+  }
+
+  // TODO: 03/12/2022 inserir doc
+  public void sortearVideo() {
+    final String pathName = Sistema.DEFAULT_PATH;
+    File directory = new File(pathName);
+
+    List<File> files = listVideoFiles(directory);
+    if (!files.isEmpty()) {
+
+      final List<RVideo> rVideos = gerarListaRVideo(files);
+      final RVideo rVideo = sortearRVideo(rVideos);
+      executarVideo(rVideo.getAbsolutePath());
     }
   }
 }
