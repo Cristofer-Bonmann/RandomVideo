@@ -31,7 +31,11 @@ public class RandomVideo {
 
     final List<RVideo> rVideos = files.stream().map(file -> {
       final int andIncrement = aiIndex.getAndIncrement();
-      return RVideo.builder().index(andIncrement).absolutePath(file.getAbsolutePath()).build();
+
+      return RVideo.builder()
+              .index(andIncrement)
+              .absolutePath(file.getAbsolutePath())
+              .build();
 
     }).collect(Collectors.toList());
 

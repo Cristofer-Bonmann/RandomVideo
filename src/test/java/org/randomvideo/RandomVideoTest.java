@@ -10,6 +10,7 @@ import org.mockito.Spy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,18 @@ public class RandomVideoTest {
   @Before
   public void setUp() {
     MockitoAnnotations.openMocks(this);
+  }
+
+  @Test
+  public void deveGerarListaRVideo() {
+    final List<File> files = Arrays.asList(new java.io.File(Sistema.DEFAULT_PATH).listFiles());
+
+    final List<RVideo> rVideos = randomVideo.gerarListaRVideo(files);
+
+    assertThat(rVideos.get(0).getAbsolutePath().contains("1-arquivo_de_video_1.mp4"), is(true));
+    assertThat(rVideos.get(1).getAbsolutePath().contains("2-arquivo_de_video_2.mkv"), is(true));
+    assertThat(rVideos.get(2).getAbsolutePath().contains("3-arquivo_de_video_3.flv"), is(true));
+    assertThat(rVideos.get(3).getAbsolutePath().contains("4-arquivo_de_video_4.webm"), is(true));
   }
 
   @Test
