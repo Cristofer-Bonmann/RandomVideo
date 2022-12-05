@@ -32,9 +32,16 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveSortearRVideoComListaInvalida() {
-    final List<RVideo> rVideos = new ArrayList();
+    List<RVideo> rVideos = new ArrayList();
 
-    final RVideo rVideo = randomVideo.sortearRVideo(rVideos);
+    RVideo rVideo = randomVideo.sortearRVideo(rVideos);
+
+    assertThat(rVideo.getIndex(), is(-1));
+    assertThat(rVideo.getAbsolutePath(), is(""));
+
+    rVideos = null;
+
+    rVideo = randomVideo.sortearRVideo(rVideos);
 
     assertThat(rVideo.getIndex(), is(-1));
     assertThat(rVideo.getAbsolutePath(), is(""));

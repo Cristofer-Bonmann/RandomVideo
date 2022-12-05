@@ -49,7 +49,7 @@ public class RandomVideo {
   // TODO: 04/12/2022 inserir doc
   protected RVideo sortearRVideo(List<RVideo> rVideos) {
     RVideo rVideo;
-    if (!rVideos.isEmpty()) {
+    if (rVideos != null && !rVideos.isEmpty()) {
       final Random random = new Random();
       final int randomInt = random.ints(0, (rVideos.size() - 1)).findFirst().getAsInt();
       rVideo = rVideos.stream().filter(rvideo -> rvideo.getIndex() == randomInt).findFirst().get();
