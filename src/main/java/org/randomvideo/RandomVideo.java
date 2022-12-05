@@ -97,8 +97,8 @@ public class RandomVideo {
   /**
    * Exibe notificação de falha na execução do arquivo.
    */
-  protected void notificarFalha(String videoAbsolutPath) {
-    final String msg = String.format("Não foi possível executar o arquivo: %s", videoAbsolutPath);
+  protected void notificarFalha(String videoAbsolutPath, String exceptionMessage) {
+    final String msg = String.format("Não foi possível executar o arquivo: %s - %s", videoAbsolutPath, exceptionMessage);
     System.err.println(msg);
   }
 
@@ -119,7 +119,7 @@ public class RandomVideo {
       try {
         executarVideo(rVideo.getAbsolutePath());
       } catch(IOException | InterruptedException e) {
-        notificarFalha(rVideo.getAbsolutePath());
+        notificarFalha(rVideo.getAbsolutePath(), e.getMessage());
       }
     }
   }

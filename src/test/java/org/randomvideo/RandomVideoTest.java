@@ -33,12 +33,14 @@ public class RandomVideoTest {
 
   @Test
   public void deveDispararExcecaoAoExecutarVideoSorteado() throws IOException, InterruptedException {
-    doThrow(IOException.class).when(randomVideo).executarVideo(Mockito.any());
-    doNothing().when(randomVideo).notificarFalha(Mockito.any());
+    final IOException ioException = new IOException("");
+
+    doThrow(ioException).when(randomVideo).executarVideo(Mockito.any());
+    doNothing().when(randomVideo).notificarFalha(Mockito.any(), Mockito.any());
     randomVideo.sortearVideo();
 
     verify(randomVideo).executarVideo(Mockito.any());
-    verify(randomVideo).notificarFalha(Mockito.any());
+    verify(randomVideo).notificarFalha(Mockito.any(), Mockito.any());
   }
 
   @Test
