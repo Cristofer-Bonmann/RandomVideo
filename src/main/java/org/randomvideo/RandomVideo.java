@@ -46,7 +46,11 @@ public class RandomVideo {
     return rVideos;
   }
 
-  // TODO: 04/12/2022 inserir doc
+  /**
+   * Sorteia um item da lista de objetos 'RVideo'.
+   * @param rVideos lista de RVideo.
+   * @return retorna objeto sorteado.
+   */
   protected RVideo sortearRVideo(List<RVideo> rVideos) {
     RVideo rVideo;
     if (rVideos != null && !rVideos.isEmpty()) {
