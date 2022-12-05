@@ -103,6 +103,14 @@ public class RandomVideo {
   }
 
   /**
+   * Exibe notificação no console.
+   * @param msg mensagem que será exibida.
+   */
+  protected void notificar(String msg) {
+    System.err.println(msg);
+  }
+
+  /**
    * Sorteia um arquivo no diretório específicado, executa o arquivo sorteado e executa esse arquivo. <br>
    * Caso seja disparada alguma exceção na execução do arquivo, uma mensagem será exeibida no console.
    */
@@ -121,6 +129,10 @@ public class RandomVideo {
       } catch(IOException | InterruptedException e) {
         notificarFalha(rVideo.getAbsolutePath(), e.getMessage());
       }
+
+    } else {
+      final String msg = String.format("Nenhum arquivo de vídeo foi encontrado em %s", directory.getAbsolutePath());
+      notificar(msg);
     }
   }
 }

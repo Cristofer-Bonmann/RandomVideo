@@ -32,6 +32,20 @@ public class RandomVideoTest {
   }
 
   @Test
+  public void naoDeveExistirVideosParaSortear() {
+    final File directory = new File(Sistema.DEFAULT_PATH);
+    final List<File> files = new ArrayList<>();
+    final String msg = String.format("Nenhum arquivo de vídeo foi encontrado em %s", directory.getAbsolutePath());
+
+    doReturn(files).when(randomVideo).listVideoFiles(directory);
+    doNothing().when(randomVideo).notificar(msg);
+    randomVideo.sortearVideo();
+
+    verify(randomVideo).listVideoFiles(directory);
+    verify(randomVideo).notificar(msg);
+  }
+
+  @Test
   public void deveDispararExcecaoAoExecutarVideoSorteado() throws IOException, InterruptedException {
     final IOException ioException = new IOException("");
 
