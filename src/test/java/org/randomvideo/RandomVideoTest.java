@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +29,14 @@ public class RandomVideoTest {
   @Before
   public void setUp() {
     MockitoAnnotations.openMocks(this);
+  }
+
+  @Test
+  public void deveExecutarVideoSorteado() throws IOException, InterruptedException {
+    doNothing().when(randomVideo).executarVideo(Mockito.any());
+    randomVideo.sortearVideo();
+
+    verify(randomVideo).executarVideo(Mockito.any());
   }
 
   @Test
@@ -70,7 +79,7 @@ public class RandomVideoTest {
   }
 
   @Test
-  public void naoDeveSortearVideoComListaDeFilesInvalida() {
+  public void naoDeveSortearVideoComListaDeFilesInvalida() throws IOException, InterruptedException {
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = null;
 
@@ -82,7 +91,7 @@ public class RandomVideoTest {
   }
 
   @Test
-  public void naoDeveSortearVideoComListaDeFilesVazia() {
+  public void naoDeveSortearVideoComListaDeFilesVazia() throws IOException, InterruptedException {
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = new ArrayList<>();
 

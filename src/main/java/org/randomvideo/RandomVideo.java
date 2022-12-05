@@ -64,36 +64,27 @@ public class RandomVideo {
   }
 
   // TODO: 04/12/2022 inserir doc
-  protected void executarVideo(String videoPath) {
+  protected void executarVideo(String videoPath) throws IOException, InterruptedException {
     final ProcessBuilder processBuilder = new ProcessBuilder();
     final String command = videoPath;
     processBuilder.command("xdg-open", command);
 
-    try {
-      final Process start = processBuilder.start();
-      final StringBuilder stringBuilder = new StringBuilder();
-      final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(start.getInputStream()));
+    final Process start = processBuilder.start();
+    final StringBuilder stringBuilder = new StringBuilder();
+    final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(start.getInputStream()));
 
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        stringBuilder.append(line + "\n");
-      }
+    String line;
+    while ((line = bufferedReader.readLine()) != null) {
+      stringBuilder.append(line + "\n");
+    }
 
-      int exitVal = start.waitFor();
-      if (exitVal == 0) {
-        System.out.println("Success!");
-        System.out.println(stringBuilder);
+    int exitVal = start.waitFor();
+    if (exitVal == 0) {
+      System.out.println(">>> Executando: " + videoPath);
+      System.out.println(stringBuilder);
 
-      } else {
-        System.out.println("FUCK!");
-      }
-
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    } finally {
-      System.exit(0);
+    } else {
+      System.out.println("Alguma coisa deu errado!");
     }
   }
 
@@ -107,7 +98,12 @@ public class RandomVideo {
     if (files != null && !files.isEmpty()) {
       final List<RVideo> rVideos = gerarListaRVideo(files);
       final RVideo rVideo = sortearRVideo(rVideos);
-      executarVideo(rVideo.getAbsolutePath());
+
+      try {
+        executarVideo(rVideo.getAbsolutePath());
+      } catch(IOException | InterruptedException e) {
+        throw new RuntimeException();
+      }
     }
   }
 }
