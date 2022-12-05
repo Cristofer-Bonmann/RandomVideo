@@ -114,7 +114,10 @@ public class RandomVideo {
    * Sorteia um arquivo no diretório específicado, executa o arquivo sorteado e executa esse arquivo. <br>
    * Caso seja disparada alguma exceção na execução do arquivo, uma mensagem será exeibida no console.
    */
-  public void sortearVideo() {
+  public void sortearVideo(String[] args) {
+
+    final String folder = args[0];
+
     final String pathName = Sistema.DEFAULT_PATH;
     File directory = new File(pathName);
 

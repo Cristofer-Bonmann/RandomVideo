@@ -1,7 +1,5 @@
 package org.randomvideo;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -33,13 +31,14 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveExistirVideosParaSortear() {
+    final String[] args = new String[]{""};
     final File directory = new File(Sistema.DEFAULT_PATH);
     final List<File> files = new ArrayList<>();
     final String msg = String.format("Nenhum arquivo de vídeo foi encontrado em %s", directory.getAbsolutePath());
 
     doReturn(files).when(randomVideo).listVideoFiles(directory);
     doNothing().when(randomVideo).notificar(msg);
-    randomVideo.sortearVideo();
+    randomVideo.sortearVideo(args);
 
     verify(randomVideo).listVideoFiles(directory);
     verify(randomVideo).notificar(msg);
@@ -47,11 +46,12 @@ public class RandomVideoTest {
 
   @Test
   public void deveDispararExcecaoAoExecutarVideoSorteado() throws IOException, InterruptedException {
+    final String[] args = new String[]{""};
     final IOException ioException = new IOException("");
 
     doThrow(ioException).when(randomVideo).executarVideo(Mockito.any());
     doNothing().when(randomVideo).notificarFalha(Mockito.any(), Mockito.any());
-    randomVideo.sortearVideo();
+    randomVideo.sortearVideo(args);
 
     verify(randomVideo).executarVideo(Mockito.any());
     verify(randomVideo).notificarFalha(Mockito.any(), Mockito.any());
@@ -59,8 +59,10 @@ public class RandomVideoTest {
 
   @Test
   public void deveExecutarVideoSorteado() throws IOException, InterruptedException {
+    final String[] args = new String[]{""};
+
     doNothing().when(randomVideo).executarVideo(Mockito.any());
-    randomVideo.sortearVideo();
+    randomVideo.sortearVideo(args);
 
     verify(randomVideo).executarVideo(Mockito.any());
   }
@@ -106,25 +108,27 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveSortearVideoComListaDeFilesInvalida() throws IOException, InterruptedException {
+    final String[] args = new String[]{""};
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = null;
 
     doReturn(listFiles).when(randomVideo).listVideoFiles(defaultPath);
-    randomVideo.sortearVideo();
+    randomVideo.sortearVideo(args);
 
-    verify(randomVideo).sortearVideo();
+    verify(randomVideo).listVideoFiles(defaultPath);
     verify(randomVideo, times(0)).executarVideo(Mockito.any());
   }
 
   @Test
   public void naoDeveSortearVideoComListaDeFilesVazia() throws IOException, InterruptedException {
+    final String[] args = new String[]{""};
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = new ArrayList<>();
 
     doReturn(listFiles).when(randomVideo).listVideoFiles(defaultPath);
-    randomVideo.sortearVideo();
+    randomVideo.sortearVideo(args);
 
-    verify(randomVideo).sortearVideo();
+    verify(randomVideo).listVideoFiles(defaultPath);
     verify(randomVideo, times(0)).executarVideo(Mockito.any());
   }
 
