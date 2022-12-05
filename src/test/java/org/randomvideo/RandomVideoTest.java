@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -27,6 +28,16 @@ public class RandomVideoTest {
   @Before
   public void setUp() {
     MockitoAnnotations.openMocks(this);
+  }
+
+  @Test
+  public void deveSortearRVideo() {
+    final List<File> files = Arrays.asList(new File(Sistema.DEFAULT_PATH).listFiles());
+    final List<RVideo> listRVideos = randomVideo.gerarListaRVideo(files);
+
+    final RVideo rVideo = randomVideo.sortearRVideo(listRVideos);
+
+    assertThat(rVideo, notNullValue());
   }
 
   @Test

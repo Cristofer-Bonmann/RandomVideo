@@ -25,7 +25,11 @@ public class RandomVideo {
     return files.stream().collect(Collectors.toList());
   }
 
-  // TODO: 04/12/2022 inserir doc
+  /**
+   * Gera lista de objetos 'RVideo' com os objetos 'File' da lista passada por parâmetro(files).
+   * @param files lista de 'File'.
+   * @return lista de objetos 'RVideo'.
+   */
   protected List<RVideo> gerarListaRVideo(List<File> files) {
     final AtomicInteger aiIndex = new AtomicInteger(0);
 
@@ -91,8 +95,8 @@ public class RandomVideo {
     File directory = new File(pathName);
 
     List<File> files = listVideoFiles(directory);
-    if (files != null && !files.isEmpty()) {
 
+    if (files != null && !files.isEmpty()) {
       final List<RVideo> rVideos = gerarListaRVideo(files);
       final RVideo rVideo = sortearRVideo(rVideos);
       executarVideo(rVideo.getAbsolutePath());
