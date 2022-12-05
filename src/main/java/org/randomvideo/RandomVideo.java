@@ -64,7 +64,12 @@ public class RandomVideo {
     return rVideo;
   }
 
-  // TODO: 04/12/2022 inserir doc
+  /**
+   * Executa o vídeo o arquivo de vídeo(videoPath).
+   * @param videoPath caminho do arquivo que será executado.
+   * @throws IOException
+   * @throws InterruptedException
+   */
   protected void executarVideo(String videoPath) throws IOException, InterruptedException {
     final ProcessBuilder processBuilder = new ProcessBuilder();
     final String command = videoPath;
@@ -97,7 +102,10 @@ public class RandomVideo {
     System.err.println(msg);
   }
 
-  // TODO: 03/12/2022 inserir doc
+  /**
+   * Sorteia um arquivo no diretório específicado, executa o arquivo sorteado e executa esse arquivo. <br>
+   * Caso seja disparada alguma exceção na execução do arquivo, uma mensagem será exeibida no console.
+   */
   public void sortearVideo() {
     final String pathName = Sistema.DEFAULT_PATH;
     File directory = new File(pathName);
