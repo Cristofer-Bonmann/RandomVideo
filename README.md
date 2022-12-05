@@ -9,9 +9,9 @@ Arquivos suportados: mp4, mkv, webm e flv.
 </p>
 
 <p>
-Testado no ambiente:<br>
-Sistema Operacional Ubuntu 22.04.1 LTS
-Arquitetura 64 bits
-Versão GNOME 42.5
-Sistema de Janelas X11
+Testado no ambiente:
 </p>
+<li>Sistema Operacional Ubuntu 22.04.1 LTS;</li>
+<li>Arquitetura 64 bits;</li>
+<li>Versão GNOME 42.5;</li>
+<li>Sistema de Janelas X11.</li>
