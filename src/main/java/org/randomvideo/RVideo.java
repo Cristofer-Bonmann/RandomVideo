@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class RVideo {
-  private Integer index;
-  private String absolutePath;
+  @Builder.Default
+  private Integer index = -1;
+  @Builder.Default
+  private String absolutePath = "";
 }

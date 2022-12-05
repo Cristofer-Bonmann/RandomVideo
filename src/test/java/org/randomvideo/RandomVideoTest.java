@@ -31,6 +31,16 @@ public class RandomVideoTest {
   }
 
   @Test
+  public void naoDeveSortearRVideoComListaInvalida() {
+    final List<RVideo> rVideos = new ArrayList();
+
+    final RVideo rVideo = randomVideo.sortearRVideo(rVideos);
+
+    assertThat(rVideo.getIndex(), is(-1));
+    assertThat(rVideo.getAbsolutePath(), is(""));
+  }
+
+  @Test
   public void deveSortearRVideo() {
     final List<File> files = Arrays.asList(new File(Sistema.DEFAULT_PATH).listFiles());
     final List<RVideo> listRVideos = randomVideo.gerarListaRVideo(files);
