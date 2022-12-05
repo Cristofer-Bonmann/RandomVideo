@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -31,7 +32,7 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveExistirVideosParaSortear() {
-    final String[] args = new String[]{""};
+    final String[] args = null;
     final File directory = new File(Sistema.DEFAULT_PATH);
     final List<File> files = new ArrayList<>();
     final String msg = String.format("Nenhum arquivo de vídeo foi encontrado em %s", directory.getAbsolutePath());
@@ -46,7 +47,7 @@ public class RandomVideoTest {
 
   @Test
   public void deveDispararExcecaoAoExecutarVideoSorteado() throws IOException, InterruptedException {
-    final String[] args = new String[]{""};
+    final String[] args = null;
     final IOException ioException = new IOException("");
 
     doThrow(ioException).when(randomVideo).executarVideo(Mockito.any());
@@ -59,12 +60,25 @@ public class RandomVideoTest {
 
   @Test
   public void deveExecutarVideoSorteado() throws IOException, InterruptedException {
-    final String[] args = new String[]{""};
+    final String[] args = null;
 
     doNothing().when(randomVideo).executarVideo(Mockito.any());
     randomVideo.sortearVideo(args);
 
     verify(randomVideo).executarVideo(Mockito.any());
+  }
+
+  @Test
+  public void deveSortearVideoComDiretorioEspecificado() throws IOException, InterruptedException {
+    final String[] args = new String[]{"/diretorio/especifico/"};
+    final File directory = new File(args[0]);
+    final List<File> files = new ArrayList<>();
+
+    doReturn(files).when(randomVideo).listVideoFiles(directory);
+    randomVideo.sortearVideo(args);
+
+    verify(randomVideo).listVideoFiles(directory);
+    verify(randomVideo, times(0)).executarVideo(Mockito.any());
   }
 
   @Test
@@ -108,7 +122,7 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveSortearVideoComListaDeFilesInvalida() throws IOException, InterruptedException {
-    final String[] args = new String[]{""};
+    final String[] args = null;
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = null;
 
@@ -121,7 +135,7 @@ public class RandomVideoTest {
 
   @Test
   public void naoDeveSortearVideoComListaDeFilesVazia() throws IOException, InterruptedException {
-    final String[] args = new String[]{""};
+    final String[] args = null;
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = new ArrayList<>();
 

@@ -116,10 +116,14 @@ public class RandomVideo {
    */
   public void sortearVideo(String[] args) {
 
-    final String folder = args[0];
+    String folder;
+    if (args != null && args.length == 1) {
+      folder = args[0];
+    } else {
+      folder = Sistema.DEFAULT_PATH;
+    }
 
-    final String pathName = Sistema.DEFAULT_PATH;
-    File directory = new File(pathName);
+    File directory = new File(folder);
 
     List<File> files = listVideoFiles(directory);
 
