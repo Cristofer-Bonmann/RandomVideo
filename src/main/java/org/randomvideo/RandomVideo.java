@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -88,6 +89,14 @@ public class RandomVideo {
     }
   }
 
+  /**
+   * Exibe notificação de falha na execução do arquivo.
+   */
+  protected void notificarFalha(String videoAbsolutPath) {
+    final String msg = String.format("Não foi possível executar o arquivo: %s", videoAbsolutPath);
+    System.err.println(msg);
+  }
+
   // TODO: 03/12/2022 inserir doc
   public void sortearVideo() {
     final String pathName = Sistema.DEFAULT_PATH;
@@ -102,7 +111,7 @@ public class RandomVideo {
       try {
         executarVideo(rVideo.getAbsolutePath());
       } catch(IOException | InterruptedException e) {
-        throw new RuntimeException();
+        notificarFalha(rVideo.getAbsolutePath());
       }
     }
   }
