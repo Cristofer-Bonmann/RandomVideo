@@ -87,7 +87,7 @@ public class RandomVideo {
     File directory = new File(pathName);
 
     List<File> files = listVideoFiles(directory);
-    if (!files.isEmpty()) {
+    if (files != null && !files.isEmpty()) {
 
       final List<RVideo> rVideos = gerarListaRVideo(files);
       final RVideo rVideo = sortearRVideo(rVideos);

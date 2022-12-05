@@ -29,6 +29,18 @@ public class RandomVideoTest {
   }
 
   @Test
+  public void naoDeveSortearVideoComListaDeFilesInvalida() {
+    final File defaultPath = new File(Sistema.DEFAULT_PATH);
+    final List<File> listFiles = null;
+
+    doReturn(listFiles).when(randomVideo).listVideoFiles(defaultPath);
+    randomVideo.sortearVideo();
+
+    verify(randomVideo).sortearVideo();
+    verify(randomVideo, times(0)).executarVideo(Mockito.any());
+  }
+
+  @Test
   public void naoDeveSortearVideoComListaDeFilesVazia() {
     final File defaultPath = new File(Sistema.DEFAULT_PATH);
     final List<File> listFiles = new ArrayList<>();
